@@ -89,7 +89,6 @@ OC.L10N.register(
     "Please specify a file or folder path" : "Tiltaktu skrá eða slóð á möppu",
     "Wrong path, file/folder doesn't exist" : "Röng slóð, skrá/mappa er ekki til",
     "Could not create share" : "Ekki tókst að búa til sameign",
-    "invalid permissions" : "Ógildar aðgangsheimildir",
     "Please specify a valid user" : "Settu inn gilt notandanafn",
     "Group sharing is disabled by the administrator" : "Deiling innan hóps hefur verið gerð óvirk af kerfisstjóra.",
     "Please specify a valid group" : "Settu inn gildan hóp",
@@ -106,12 +105,9 @@ OC.L10N.register(
     "Not a directory" : "Er ekki mappa",
     "Could not lock path" : "Gat ekki læst slóð",
     "Wrong or no update parameter given" : "Rangt eða ekkert uppfærsluviðfang gefið",
-    "Can't change permissions for public share links" : "Ekki tókst að breyta aðgangsheimildum fyrir opinbera deilingartengla",
-    "Sharing sending the password by Nextcloud Talk failed because Nextcloud Talk is not enabled" : "Deiling með því að senda lykilorð með Nextcloud Talk mistókst því að Nextcloud Talk er ekki virkt",
     "shared by %s" : "Deilt af %s",
     "Download all files" : "Sækja allar skrár",
     "Direct link" : "Beinn tengill",
-    "Add to your Nextcloud" : "Bæta í þitt eigið Nextcloud",
     "Share API is disabled" : "Deilingar-API er óvirkt",
     "File sharing" : "Skráadeiling",
     "Share will expire tomorrow" : "Sameignin rennur út á morgun",
@@ -178,6 +174,10 @@ OC.L10N.register(
     "Note" : "Minnispunktur",
     "Select or drop files" : "Veldu eða slepptu skrám",
     "Uploaded files:" : "Innsendar skrár:",
-    "By uploading files, you agree to the %1$sterms of service%2$s." : "Með því að senda inn skrár, samþykkir þú %1$sþjónustuskilmálana%2$s."
+    "By uploading files, you agree to the %1$sterms of service%2$s." : "Með því að senda inn skrár, samþykkir þú %1$sþjónustuskilmálana%2$s.",
+    "Add to your Nextcloud" : "Bæta í þitt eigið Nextcloud",
+    "invalid permissions" : "Ógildar aðgangsheimildir",
+    "Can't change permissions for public share links" : "Ekki tókst að breyta aðgangsheimildum fyrir opinbera deilingartengla",
+    "Sharing sending the password by Nextcloud Talk failed because Nextcloud Talk is not enabled" : "Deiling með því að senda lykilorð með Nextcloud Talk mistókst því að Nextcloud Talk er ekki virkt"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

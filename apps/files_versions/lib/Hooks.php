@@ -5,7 +5,7 @@
  * @author Bart Visscher <bartv@thisnet.nl>
  * @author Björn Schießle <bjoern@schiessle.org>
  * @author Christoph Wurst <christoph@winzerhof-wurst.at>
- * @author John Molakvoæ (skjnldsv) <skjnldsv@protonmail.com>
+ * @author John Molakvoæ <skjnldsv@protonmail.com>
  * @author Jörn Friedrich Dreyer <jfd@butonic.de>
  * @author Morris Jobke <hey@morrisjobke.de>
  * @author Robin Appelman <robin@icewind.nl>
@@ -27,11 +27,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>
  *
  */
-
-/**
- * This class contains all hooks.
- */
-
 namespace OCA\Files_Versions;
 
 use OC\Files\Filesystem;
@@ -129,7 +124,7 @@ class Hooks {
 	public static function pre_renameOrCopy_hook($params) {
 		// if we rename a movable mount point, then the versions don't have
 		// to be renamed
-		$absOldPath = Filesystem::normalizePath('/' . \OCP\User::getUser() . '/files' . $params['oldpath']);
+		$absOldPath = Filesystem::normalizePath('/' . \OC_User::getUser() . '/files' . $params['oldpath']);
 		$manager = Filesystem::getMountManager();
 		$mount = $manager->find($absOldPath);
 		$internalPath = $mount->getInternalPath($absOldPath);
@@ -137,7 +132,7 @@ class Hooks {
 			return;
 		}
 
-		$view = new View(\OCP\User::getUser() . '/files');
+		$view = new View(\OC_User::getUser() . '/files');
 		if ($view->file_exists($params['newpath'])) {
 			Storage::store($params['newpath']);
 		} else {

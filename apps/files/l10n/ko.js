@@ -73,9 +73,6 @@ OC.L10N.register(
     "File name cannot be empty." : "파일 이름이 비어 있을 수 없습니다.",
     "\"/\" is not allowed inside a file name." : "파일 이름에 \"/\"를 사용할 수 없습니다.",
     "\"{name}\" is not an allowed filetype" : "\"{name}\"은 허용된 파일 형식이 아님",
-    "Storage of {owner} is full, files can not be updated or synced anymore!" : "{owner}의 저장소가 가득 찼습니다. 파일을 더 이상 업데이트하거나 동기화할 수 없습니다!",
-    "Your storage is full, files can not be updated or synced anymore!" : "저장 공간이 가득 찼습니다. 파일을 업데이트하거나 동기화할 수 없습니다!",
-    "_matches '{filter}'_::_match '{filter}'_" : ["'{filter}'와(과) 일치"],
     "View in folder" : "폴더에서 보기",
     "Copied!" : "복사 성공!",
     "Copy direct link (only works for users who have access to this file/folder)" : "직접 링크 복사(이 파일/폴더에 접근 권한이 있는 사람만)",
@@ -147,13 +144,8 @@ OC.L10N.register(
     "Deleted shares" : "삭제된 공유",
     "Text file" : "텍스트 파일",
     "New text file.txt" : "새 텍스트 파일.txt",
-    "Unshare" : "공유 해제",
-    "Storage of {owner} is almost full ({usedSpacePercent}%)" : "{owner}의 저장 공간이 거의 가득 찼습니다({usedSpacePercent}%)",
-    "Your storage is almost full ({usedSpacePercent}%)" : "저장 공간이 거의 가득 찼습니다({usedSpacePercent}%)",
-    "A file or folder has been <strong>changed</strong> or <strong>renamed</strong>" : "파일이나 폴더가 <strong>변경되거나</strong> <strong>이름이 바뀜</strong>",
-    "A new file or folder has been <strong>created</strong>" : "새 파일이나 폴더가 <strong>생성됨</strong>",
-    "A file or folder has been <strong>deleted</strong>" : "파일이나 폴더가 <strong>삭제됨</strong>",
-    "Limit notifications about creation and changes to your <strong>favorite files</strong> <em>(Stream only)</em>" : "<strong>즐겨찾는 파일</strong>의 생성 및 변경 사항에 대한 알림을 줄일 수 있습니다<em>(스트림에서만)</em>",
-    "A file or folder has been <strong>restored</strong>" : "파일이나 폴더가 <strong>복원됨</strong>"
+    "Storage of {owner} is full, files can not be updated or synced anymore!" : "{owner}의 저장소가 가득 찼습니다. 파일을 더 이상 업데이트하거나 동기화할 수 없습니다!",
+    "Your storage is full, files can not be updated or synced anymore!" : "저장 공간이 가득 찼습니다. 파일을 업데이트하거나 동기화할 수 없습니다!",
+    "_matches '{filter}'_::_match '{filter}'_" : ["'{filter}'와(과) 일치"]
 },
 "nplurals=1; plural=0;");

@@ -135,7 +135,14 @@ class OC_App {
 		ob_start();
 		foreach ($apps as $app) {
 			if (!isset(self::$loadedApps[$app]) && ($types === [] || self::isType($app, $types))) {
-				self::loadApp($app);
+				try {
+					self::loadApp($app);
+				} catch (\Throwable $e) {
+					\OC::$server->get(LoggerInterface::class)->emergency('Error during app loading: ' . $e->getMessage(), [
+						'exception' => $e,
+						'app' => $app,
+					]);
+				}
 			}
 		}
 		ob_end_clean();
@@ -453,10 +460,6 @@ class OC_App {
 	 * @return string|false
 	 */
 	public static function getInstallPath() {
-		if (\OC::$server->getSystemConfig()->getValue('appstoreenabled', true) == false) {
-			return false;
-		}
-
 		foreach (OC::$APPSROOTS as $dir) {
 			if (isset($dir['writable']) && $dir['writable'] === true) {
 				return $dir['path'];

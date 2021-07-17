@@ -330,9 +330,7 @@
 						this.multiSelectMenuItems[i] = this.multiSelectMenuItems[i](this);
 					}
 				}
-				this.fileMultiSelectMenu = new OCA.Files.FileMultiSelectMenu(this.multiSelectMenuItems);
-				this.fileMultiSelectMenu.render();
-				this.$el.find('.selectedActions').append(this.fileMultiSelectMenu.$el);
+				this._updateMultiSelectFileActions()
 			}
 
 			if (options.sorting) {
@@ -414,6 +412,31 @@
 				this.$fileList.one('updated', function() {
 					self.scrollTo(options.scrollTo);
 				});
+			}
+
+			if(options.openFile) {
+				// Wait for some initialisation process to be over before triggering the default action.
+				_.defer(() => {
+					try {
+						var fileInfo = JSON.parse(atob($('#initial-state-files-openFileInfo').val()))
+						var spec = this.fileActions.getDefaultFileAction(fileInfo.mime, fileInfo.type, fileInfo.permissions)
+						if (spec && spec.action) {
+							spec.action(fileInfo.name, {
+								fileId: fileInfo.id,
+								fileList: this,
+								fileActions: this.fileActions,
+								dir: fileInfo.directory
+							});
+						} else {
+							var url = this.getDownloadUrl(fileInfo.name, fileInfo.dir, true);
+							OCA.Files.Files.handleDownload(url);
+						}
+
+						OCA.Files.Sidebar.open(fileInfo.path);
+					} catch (error) {
+						console.error(`Failed to trigger default action on the file for URL: ${location.href}`, error)
+					}
+				})
 			}
 
 			this._operationProgressBar = new OCA.Files.OperationProgressBar();
@@ -516,7 +539,7 @@
 		multiSelectMenuClick: function (ev, action) {
 				var actionFunction = _.find(this.multiSelectMenuItems, function (item) {return item.name === action;}).action;
 				if (actionFunction) {
-					actionFunction(ev);
+					actionFunction(this.getSelectedFiles());
 					return;
 				}
 				switch (action) {
@@ -1322,31 +1345,6 @@
 				}, 0);
 			}
 
-			if(!this.triedActionOnce) {
-				var id = OC.Util.History.parseUrlQuery().openfile;
-				if (id) {
-					var $tr = this.$fileList.children().filterAttr('data-id', '' + id);
-					var filename = $tr.attr('data-file');
-					this.fileActions.currentFile = $tr.find('td');
-					var dir = $tr.attr('data-path') || this.getCurrentDirectory();
-					var spec = this.fileActions.getCurrentDefaultFileAction();
-					if (spec && spec.action) {
-						spec.action(filename, {
-							$file: $tr,
-							fileList: this,
-							fileActions: this.fileActions,
-							dir: dir
-						});
-
-					}
-					else {
-						var url = this.getDownloadUrl(filename, dir, true);
-						OCA.Files.Files.handleDownload(url);
-					}
-				}
-				this.triedActionOnce = true;
-			}
-
 			return newTrs;
 		},
 
@@ -1366,6 +1364,32 @@
 			});
 			this.$fileList.trigger($.Event('fileActionsReady', {fileList: this, $files: $files}));
 
+		},
+
+		/**
+		 * Register action for multiple selected files
+		 *
+		 * @param {OCA.Files.FileAction} fileAction object
+		 * The callback of FileAction will be called with an array of files that are currently selected
+		 */
+		registerMultiSelectFileAction: function(fileAction) {
+			if (typeof this.multiSelectMenuItems === 'undefined') {
+				return;
+			}
+			this.multiSelectMenuItems.push(fileAction)
+			this._updateMultiSelectFileActions()
+		},
+
+		_updateMultiSelectFileActions: function() {
+			if (typeof this.multiSelectMenuItems === 'undefined') {
+				return;
+			}
+			this.fileMultiSelectMenu = new OCA.Files.FileMultiSelectMenu(this.multiSelectMenuItems.sort(function(a, b) {
+				return a.order > b.order
+			}));
+			this.fileMultiSelectMenu.render();
+			this.$el.find('.selectedActions .filesSelectMenu').remove();
+			this.$el.find('.selectedActions').append(this.fileMultiSelectMenu.$el);
 		},
 
 		/**
@@ -3785,6 +3809,7 @@
 					return t('files', 'Select file range');
 				},
 				iconClass: 'icon-fullscreen',
+				order: 15,
 				action: function() {
 					fileList._onClickToggleSelectionMode();
 				},

@@ -17,14 +17,13 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 namespace OC\Files\ObjectStore;
 
 use Aws\S3\Exception\S3MultipartUploadException;
@@ -69,6 +68,11 @@ trait S3ObjectTrait {
 					'header' => $headers,
 				],
 			];
+
+			if ($this->getProxy()) {
+				$opts['http']['proxy'] = $this->getProxy();
+				$opts['http']['request_fulluri'] = true;
+			}
 
 			$context = stream_context_create($opts);
 			return fopen($request->getUri(), 'r', false, $context);

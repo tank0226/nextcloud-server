@@ -27,7 +27,7 @@ OC.L10N.register(
     "%s accessed %s" : "%s(e)k %s atzitu du",
     "%s renamed %s" : "%s(e)k %s izenez aldatu du",
     "%s copied %s" : "%s(e)k %s kopiatu du",
-    "%s assigned %s to %s" : "%s(e)k %s esleitu dio %s(e)ri",
+    "%s assigned %s to %s" : "%s(e)k %s esleitu dio %s(r)i",
     "Operation #%s does not exist" : "Ez dago #%s eragiketarik",
     "Entity %s does not exist" : "Ez dago %s entitaterik",
     "Entity %s is invalid" : "%s entitatea baliogabea da",
@@ -83,7 +83,7 @@ OC.L10N.register(
     "Available flows" : "Fluxu erabilgarriak",
     "For details on how to write your own flow, check out the development documentation." : "Zeure fluxua idazten jakiteko informazioa lortzeko, begiratu garatzaileen dokumentazioa.",
     "More flows" : "Fluxu gehiago",
-    "Browse the app store" : "Arakatu aplikazio biltegia",
+    "Browse the App Store" : "Arakatu aplikazio biltegia",
     "Show less" : "Erakutsi gutxiago",
     "Show more" : "Erakutsi gehiago",
     "Configured flows" : "Konfiguratutako fluxuak",
@@ -114,6 +114,7 @@ OC.L10N.register(
     "Request user agent" : "Eskatu erabiltzaile-agentea",
     "User group membership" : "Erabiltzailearen talde-kidetza",
     "is member of" : "hemengo kide da:",
-    "is not member of" : "ez da hemengo kide:"
+    "is not member of" : "ez da hemengo kide:",
+    "Browse the app store" : "Arakatu aplikazio biltegia"
 },
 "nplurals=2; plural=(n != 1);");

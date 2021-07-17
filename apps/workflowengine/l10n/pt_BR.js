@@ -19,7 +19,7 @@ OC.L10N.register(
     "File deleted" : "Arquivo excluído",
     "File accessed" : "Arquivo acessado",
     "File copied" : "Arquivo copiado",
-    "Tag assigned" : "Rótulo atribuído",
+    "Tag assigned" : "Etiqueta atribuída",
     "Someone" : "Alguém",
     "%s created %s" : "%s criou %s",
     "%s modified %s" : "%s modificou %s",
@@ -55,7 +55,7 @@ OC.L10N.register(
     "Office documents" : "Documentos Office",
     "PDF documents" : "Documentos PDF",
     "Custom mimetype" : "Mimetype personalizado",
-    "Select a tag" : "Selecione um rótulo",
+    "Select a tag" : "Selecione uma etiqueta",
     "No results" : "Nenhum resultado",
     "%s (invisible)" : "%s (invisível)",
     "%s (restricted)" : "%s (restrito)",
@@ -83,7 +83,7 @@ OC.L10N.register(
     "Available flows" : "Fluxos disponíveis",
     "For details on how to write your own flow, check out the development documentation." : "Para detalhes sobre como escrever seu próprio fluxo, consulte a documentação de desenvolvimento.",
     "More flows" : "Mais fluxos",
-    "Browse the app store" : "Navegar pela loja de aplicativos",
+    "Browse the App Store" : "Navegue na App Store",
     "Show less" : "Mostrar menos",
     "Show more" : "Mostrar mais",
     "Configured flows" : "Fluxos configurados",
@@ -114,6 +114,7 @@ OC.L10N.register(
     "Request user agent" : "Solicitar usuário agente",
     "User group membership" : "Adesão de grupo de usuário",
     "is member of" : "é membro de",
-    "is not member of" : "não é membro de"
+    "is not member of" : "não é membro de",
+    "Browse the app store" : "Navegar pela loja de aplicativos"
 },
 "nplurals=2; plural=(n > 1);");

@@ -7,11 +7,13 @@
  * @author fnuesse <felix.nuesse@t-online.de>
  * @author fnuesse <fnuesse@techfak.uni-bielefeld.de>
  * @author Joas Schilling <coding@schilljs.com>
- * @author John Molakvoæ (skjnldsv) <skjnldsv@protonmail.com>
+ * @author John Molakvoæ <skjnldsv@protonmail.com>
  * @author Julius Härtl <jus@bitgrid.net>
  * @author Lukas Reschke <lukas@statuscode.ch>
  * @author Max Kovalenko <mxss1998@yandex.ru>
  * @author Morris Jobke <hey@morrisjobke.de>
+ * @author Nina Pypchenko <22447785+nina-py@users.noreply.github.com>
+ * @author Robin Appelman <robin@icewind.nl>
  * @author Roeland Jago Douma <roeland@famdouma.nl>
  * @author Thomas Müller <thomas.mueller@tmit.eu>
  * @author Vincent Petry <vincent@nextcloud.com>
@@ -31,7 +33,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>
  *
  */
-
 namespace OCA\Files\Controller;
 
 use OCA\Files\Activity\Helper;
@@ -55,6 +56,7 @@ use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\IUserSession;
+use OCP\Share\IManager;
 
 /**
  * Class ViewController
@@ -86,6 +88,8 @@ class ViewController extends Controller {
 	private $initialState;
 	/** @var ITemplateManager */
 	private $templateManager;
+	/** @var IManager */
+	private $shareManager;
 
 	public function __construct(string $appName,
 		IRequest $request,
@@ -98,7 +102,8 @@ class ViewController extends Controller {
 		IRootFolder $rootFolder,
 		Helper $activityHelper,
 		IInitialState $initialState,
-		ITemplateManager $templateManager
+		ITemplateManager $templateManager,
+		IManager $shareManager
 	) {
 		parent::__construct($appName, $request);
 		$this->appName = $appName;
@@ -113,6 +118,7 @@ class ViewController extends Controller {
 		$this->activityHelper = $activityHelper;
 		$this->initialState = $initialState;
 		$this->templateManager = $templateManager;
+		$this->shareManager = $shareManager;
 	}
 
 	/**
@@ -173,10 +179,11 @@ class ViewController extends Controller {
 	 * @param string $view
 	 * @param string $fileid
 	 * @param bool $fileNotFound
+	 * @param string $openfile
 	 * @return TemplateResponse|RedirectResponse
 	 * @throws NotFoundException
 	 */
-	public function index($dir = '', $view = '', $fileid = null, $fileNotFound = false) {
+	public function index($dir = '', $view = '', $fileid = null, $fileNotFound = false, $openfile = null) {
 		if ($fileid !== null) {
 			try {
 				return $this->redirectToFile($fileid);
@@ -302,7 +309,7 @@ class ViewController extends Controller {
 		$params['owner'] = $storageInfo['owner'] ?? '';
 		$params['ownerDisplayName'] = $storageInfo['ownerDisplayName'] ?? '';
 		$params['isPublic'] = false;
-		$params['allowShareWithLink'] = $this->config->getAppValue('core', 'shareapi_allow_links', 'yes');
+		$params['allowShareWithLink'] = $this->shareManager->shareApiAllowLinks() ? 'yes' : 'no';
 		$params['defaultFileSorting'] = $this->config->getUserValue($user, 'files', 'file_sorting', 'name');
 		$params['defaultFileSortingDirection'] = $this->config->getUserValue($user, 'files', 'file_sorting_direction', 'asc');
 		$params['showgridview'] = $this->config->getUserValue($user, 'files', 'show_grid', false);
@@ -325,7 +332,59 @@ class ViewController extends Controller {
 		$policy->addAllowedFrameDomain('\'self\'');
 		$response->setContentSecurityPolicy($policy);
 
+		$this->provideInitialState($dir, $openfile);
+
 		return $response;
+	}
+
+	/**
+	 * Add openFileInfo in initialState if $openfile is set.
+	 * @param string $dir - the ?dir= URL param
+	 * @param string $openfile - the ?openfile= URL param
+	 * @return void
+	 */
+	private function provideInitialState(string $dir, ?string $openfile): void {
+		if ($openfile === null) {
+			return;
+		}
+
+		$user = $this->userSession->getUser();
+
+		if ($user === null) {
+			return;
+		}
+
+		$uid = $user->getUID();
+		$userFolder = $this->rootFolder->getUserFolder($uid);
+		$nodes = $userFolder->getById((int) $openfile);
+		$node = array_shift($nodes);
+
+		if ($node === null) {
+			return;
+		}
+
+		// properly format full path and make sure
+		// we're relative to the user home folder
+		$isRoot = $node === $userFolder;
+		$path = $userFolder->getRelativePath($node->getPath());
+		$directory = $userFolder->getRelativePath($node->getParent()->getPath());
+
+		// Prevent opening a file from another folder.
+		if ($dir !== $directory) {
+			return;
+		}
+
+		$this->initialState->provideInitialState(
+			'openFileInfo', [
+				'id' => $node->getId(),
+				'name' => $isRoot ? '' : $node->getName(),
+				'path' => $path,
+				'directory' => $directory,
+				'mime' => $node->getMimetype(),
+				'type' => $node->getType(),
+				'permissions' => $node->getPermissions(),
+			]
+		);
 	}
 
 	/**

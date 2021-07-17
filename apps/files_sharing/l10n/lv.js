@@ -103,7 +103,6 @@ OC.L10N.register(
     "Please specify a file or folder path" : "Lūdzu norādiet datnes vai mapes ceļu",
     "Wrong path, file/folder doesn't exist" : "Nepareizs ceļš, datne/mape neeksistē",
     "Could not create share" : "Nevar izveidot koplietošanu",
-    "invalid permissions" : "Nederīgas atļaujas",
     "Please specify a valid user" : "Lūdzu norādiet derīgu lietotāju",
     "Group sharing is disabled by the administrator" : "Administrators grupas koplietošanu ir atslēdzis",
     "Please specify a valid group" : "Lūdzu norādiet derīgu grupu",
@@ -116,11 +115,9 @@ OC.L10N.register(
     "Could not lock node" : "Nevarēja bloķēt",
     "Could not lock path" : "Nevarēja bloķēt ceļu",
     "Wrong or no update parameter given" : "Nepareizs atjaunināšanas parametrs vai tas nav norādīts",
-    "Can't change permissions for public share links" : "Publiskai koplietošanas saitei nevar mainīt tiesības",
     "shared by %s" : "Koplietoja %s",
     "Download all files" : "Lejupielādēt visas datnes",
     "Direct link" : "Tiešā saite",
-    "Add to your Nextcloud" : "Pievienot savam Nextcloud",
     "Share API is disabled" : "Koplietošanas API ir atslēgta",
     "File sharing" : "Datņu koplietošana",
     "Share will expire tomorrow" : "Koplietošana rīt beigsies",
@@ -195,6 +192,9 @@ OC.L10N.register(
     "Select or drop files" : "Izvēlies vai ievelc datnes",
     "Uploading files" : "Augšupielādē datnes",
     "Uploaded files:" : "Augšupielādētas datnes:",
-    "By uploading files, you agree to the %1$sterms of service%2$s." : "Veicot datņu augšupielādi, jūs piekrītat %1$spakalpojuma noteikumiem%2$s."
+    "By uploading files, you agree to the %1$sterms of service%2$s." : "Veicot datņu augšupielādi, jūs piekrītat %1$spakalpojuma noteikumiem%2$s.",
+    "Add to your Nextcloud" : "Pievienot savam Nextcloud",
+    "invalid permissions" : "Nederīgas atļaujas",
+    "Can't change permissions for public share links" : "Publiskai koplietošanas saitei nevar mainīt tiesības"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

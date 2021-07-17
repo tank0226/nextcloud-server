@@ -28,7 +28,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>
  *
  */
-
 namespace OCA\Files_Sharing\Tests\External;
 
 use OC\Federation\CloudIdManager;
@@ -43,6 +42,7 @@ use OCP\Federation\ICloudFederationProviderManager;
 use OCP\Http\Client\IClientService;
 use OCP\Http\Client\IResponse;
 use OCP\IGroupManager;
+use OCP\IURLGenerator;
 use OCP\IUserManager;
 use OCP\Share\IShare;
 use Test\Traits\UserTrait;
@@ -132,7 +132,7 @@ class ManagerTest extends TestCase {
 
 		$this->testMountProvider = new MountProvider(\OC::$server->getDatabaseConnection(), function () {
 			return $this->manager;
-		}, new CloudIdManager($this->contactsManager));
+		}, new CloudIdManager($this->contactsManager, $this->createMock(IURLGenerator::class), $this->userManager));
 	}
 
 	private function setupMounts() {
